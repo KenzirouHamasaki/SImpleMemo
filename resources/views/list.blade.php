@@ -44,6 +44,10 @@
                             <td>{{ $item->category }}</td>
                             <td>{{ $item->review }}</td>
                             <td>{{ $item->comment }}</td>
+                            <td>
+                              <a href="{{ route('list.content', ['id' => $item->id]) }}" class="btn btn-primary">詳細</a>
+                            </td>
+                            //<td><a href="{{ route('list.edit', $item->id) }}" class="btn btn-primary">編集</a></td>
                         </tr>
                     @endforeach
                 </tbody>

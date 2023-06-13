@@ -11,30 +11,34 @@
         <div class="col-md-3 p-0">
             <h1>SimpleMemo</h1>
             
-            <!-- メニューリスト -->
+            <!-- サイドバー -->
             <ul class="list-group">
               <li class="list-group-item {{ request()->is('top') ? 'active' : '' }}"><a href="/top">MENU</a></li>
               <li class="list-group-item {{ request()->is('list') ? 'active' : '' }}"><a href="/list">お店リスト</a></li>
-              <li class="list-group-item {{ request()->is('list/create') ? 'active' : '' }}"><a href="/list/create">新規登録/編集</a></li>
+              <li class="list-group-item {{ request()->is('list/create', 'list/*/edit') ? 'active' : '' }}"><a href="/list/create">新規登録/編集</a></li>
               <li class="list-group-item {{ request()->is('#') ? 'active' : '' }}">カテゴリー管理</li>
           </ul>
         </div>
-
+            <!-- メインコンテンツ -->
         <div id="main-content" class="center-form">
           <div class="card">
               <div class="card-header">登録</div>
               <div class="card-body">
-                  <form method="POST" action="{{ route('list.index') }}">
-                      @csrf
-      
+                <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.store') }}" method="POST">
+                  @csrf
+
+                  @if(isset($item))
+                      @method('PUT')
+                  @endif
+
                       <div class="form-group">
                           <label for="name">店名</label>
-                          <input type="text" class="form-control" id="name" name="name" maxlength="20" required>
+                          <input type="text" class="form-control" id="name" name="name" maxlength="20" value="{{ isset($item) ? $item->name : old('name') }}" required>
                       </div>
       
                       <div class="form-group">
                           <label for="name2">店名 フリガナ</label>
-                          <input type="text" class="form-control" id="name2" name="name2" maxlength="40" required>
+                          <input type="text" class="form-control" id="name2" name="name2" maxlength="40" value="{{ isset($item) ? $item->name2 : old('name2') }}" required>
                       </div>
       
                       <div class="form-group">
@@ -65,7 +69,7 @@
       
                       <div class="form-group">
                           <label for="review">レビュー</label>
-                          <select class="form-control" id="review" name="review">
+                          <select class="form-control" id="review" name="review" value="{{ isset($item) ? $item->review : old('review') }}">
                               <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
@@ -76,19 +80,20 @@
       
                       <div class="form-group">
                           <label for="callNumber">電話番号</label>
-                          <input type="text" class="form-control" id="callNumber" name="callNumber" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" required>
+                          <input type="text" class="form-control" id="callNumber" name="callNumber" pattern="[0-9]{3}-[0-9]{4}-[0-9]{4}" value="{{ isset($item) ? $item->callNumber : old('callNumber') }}" required>
                           <small class="form-text text-muted">例: 123-4567-8901</small>
                       </div>
       
                       <div class="form-group">
                           <label for="comment">コメント(300文字以内の入力)</label>
-                          <textarea class="form-control" id="comment" name="comment" maxlength="300" required></textarea>
+                          <textarea class="form-control" id="comment" name="comment" maxlength="300" required>{{ isset($item) ? $item->comment : old('comment') }}</textarea>
                       </div>
       
                       <button type="submit" class="btn btn-primary">登録</button>
-                  </form>
+                    </form>
               </div>
           </div>
       </div>
+    </div>
   </div>
 </body>

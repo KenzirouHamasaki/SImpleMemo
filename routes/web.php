@@ -24,4 +24,7 @@ Route::get('/', 'HomeController@index')->name('home.index');
 Route::get('/top', 'TopController@index')->name('top.index');
 Route::get('/list', 'ListController@index')->name('list.index');
 Route::get('/list/create', 'ListController@createForm')->name('list.create');
-Route::post('/list', 'ListController@create');
+Route::post('/list', 'ListController@create')->name('list.store');
+Route::get('/list/{id}', 'ListController@content')->name('list.content');
+Route::get('/list/{id}/edit', 'ListController@edit')->name('list.edit');
+Route::put('/list/{id}', 'ListController@update')->name('list.update');
