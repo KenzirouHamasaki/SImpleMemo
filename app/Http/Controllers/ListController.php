@@ -65,4 +65,12 @@ class ListController extends Controller
         // 編集が完了したらリストページにリダイレクトするなどの処理を行う
         return redirect('/list')->with('success', 'Item updated successfully!');
     }
+
+    public function delete($id)
+    {
+        $item = Item::findOrFail($id);
+        $item->delete();
+
+        return redirect('/list')->with('success', 'Item deleted successfully!');
+    }
 }

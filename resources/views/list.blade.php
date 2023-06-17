@@ -47,7 +47,14 @@
                             <td>
                               <a href="{{ route('list.content', ['id' => $item->id]) }}" class="btn btn-primary">詳細</a>
                             </td>
-                            //<td><a href="{{ route('list.edit', $item->id) }}" class="btn btn-primary">編集</a></td>
+                            <td><a href="{{ route('list.edit', $item->id) }}" class="btn btn-primary">編集</a></td>
+                            <td>
+                              <form action="{{ route('list.delete', $item->id) }}" method="POST" style="display: inline-block;">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn btn-danger" onclick="return confirm('削除してもよろしいですか？')">削除</button>
+                              </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
