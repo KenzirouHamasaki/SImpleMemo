@@ -11,18 +11,20 @@
         <div class="col-md-3 p-0">
             <h1>SimpleMemo</h1>
             
-            <!-- メニューリスト -->
+            <!-- サイドバー -->
             <ul class="list-group">
               <li class="list-group-item {{ request()->is('top') ? 'active' : '' }}"><a href="/top">MENU</a></li>
               <li class="list-group-item {{ request()->is('list') ? 'active' : '' }}"><a href="/list">お店リスト</a></li>
-              <li class="list-group-item {{ request()->is('list/create') ? 'active' : '' }}"><a href="/list/create">新規登録/編集</a></li>
+              <li class="list-group-item {{ request()->is('list/create', 'list/*/edit') ? 'active' : '' }}"><a href="/list/create">新規登録/編集</a></li>
               <li class="list-group-item {{ request()->is('#') ? 'active' : '' }}">カテゴリー管理</li>
           </ul>
         </div>
+
+        <!-- メインコンテンツ -->
         <div class="col-md-9">
             <div id="main-content">
               <h2>お店リスト</h2>
-              <p><?php echo date('m月d日'); ?>こんにちは！</p>
+              <p>{{ date('m月d日') }}こんにちは！</p>
               <table class="table">
                 <thead>
                     <tr>
@@ -47,7 +49,15 @@
                             <td>
                               <a href="{{ route('list.content', ['id' => $item->id]) }}" class="btn btn-primary">詳細</a>
                             </td>
-                            //<td><a href="{{ route('list.edit', $item->id) }}" class="btn btn-primary">編集</a></td>
+                            <td><a href="{{ route('list.edit', $item->id) }}" class="btn btn-primary">編集</a>
+                            </td>
+                            <td>
+                              <form action="{{ route('list.delete', $item->id) }}" method="POST" style="display: inline-block;">
+                                  @csrf
+                                  @method('DELETE')
+                                  <button type="submit" class="btn btn-danger" onclick="return confirm('削除してもよろしいですか？')">削除</button>
+                              </form>
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>

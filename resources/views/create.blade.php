@@ -24,7 +24,10 @@
           <div class="card">
               <div class="card-header">登録</div>
               <div class="card-body">
-                <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.store') }}" method="POST">
+
+                {{-- <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.create') }}" method="POST"> --}}
+                  <form action="{{ route('list.create') }}" method="POST">
+                  
                   @csrf
 
                   @if(isset($item))
@@ -89,7 +92,8 @@
                           <textarea class="form-control" id="comment" name="comment" maxlength="300" required>{{ isset($item) ? $item->comment : old('comment') }}</textarea>
                       </div>
       
-                      <button type="submit" class="btn btn-primary">登録</button>
+                      <button type="submit" class="btn btn-primary">確認画面へ</button>
+
                     </form>
               </div>
           </div>

@@ -21,17 +21,19 @@
         </div>
         <div class="col-md-9">
             <div id="main-content">
-              <h1>お店の詳細</h1>
-              <p><?php echo date('m月d日'); ?>こんにちは！</p>
-              <h1>{{ $item->name }}</h1>
-              <h2>{{ $item->name2 }}</h2>
-              <p>カテゴリー: {{ $item->category }}</p>
-              <p>レビュー: {{ $item->review }}</p>
-              <p>電話番号: {{ $item->callNumber}}</p>
-              <p>コメント: {{ $item->comment }}</p>
-              <a href="{{ route('list.index') }}" class="btn btn-primary">お店リストに戻る</a>
-          </div>
+              <h1>カテゴリー編集ページ</h1>
+
+              <form action="{{ route('category.update', $category->id) }}" method="POST">
+                  @csrf
+                  @method('PUT')
+                  <label for="name">カテゴリー名</label>
+                  <input type="text" id="name" name="name" value="{{ $category->name }}" required>
+                  <button type="submit">修正</button>
+              </form>
+
+              <a href="{{ route('category.index') }}">戻る</a>
+            </div>
         </div>
     </div>
-</div>
+  </div>
 </body>

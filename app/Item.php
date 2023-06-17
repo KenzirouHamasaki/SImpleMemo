@@ -17,4 +17,9 @@ class Item extends Model
         'callNumber',
         '_token',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }
