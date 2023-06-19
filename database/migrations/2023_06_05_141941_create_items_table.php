@@ -18,11 +18,13 @@ class CreateItemsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name', 20);
             $table->string('name2', 40);
-            $table->string('category', 20)->nullable();
+            $table->unsignedBigInteger('category_id')->nullable();
             $table->integer('review');
             $table->string('comment', 300);
             $table->string('callNumber', 16);
             $table->timestamps();
+
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
         });
     }
 

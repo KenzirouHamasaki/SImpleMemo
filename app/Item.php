@@ -11,10 +11,15 @@ class Item extends Model
     protected $fillable = [
         'name',
         'name2',
-        'category',
+        'category_id',
         'review',
         'comment',
         'callNumber',
         '_token',
     ];
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
 }

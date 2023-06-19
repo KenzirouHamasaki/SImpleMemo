@@ -16,7 +16,7 @@
               <li class="list-group-item {{ request()->is('top') ? 'active' : '' }}"><a href="/top">MENU</a></li>
               <li class="list-group-item {{ request()->is('list') ? 'active' : '' }}"><a href="/list">お店リスト</a></li>
               <li class="list-group-item {{ request()->is('list/create', 'list/*/edit') ? 'active' : '' }}"><a href="/list/create">新規登録/編集</a></li>
-              <li class="list-group-item {{ request()->is('#') ? 'active' : '' }}">カテゴリー管理</li>
+              <li class="list-group-item {{ request()->is('categories') ? 'active' : '' }}"><a href="/categories">カテゴリー管理</a></li>
           </ul>
         </div>
             <!-- メインコンテンツ -->
