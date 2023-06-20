@@ -41,7 +41,9 @@
                         <tr>
                             <td>{{ $item->id }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->category }}</td>
+                            @foreach($item->categories as $category)
+                              <td>{{ $category->name }}</td>
+                            @endforeach
                             <td>{{ $item->review }}</td>
                             <td>{{ $item->comment }}</td>
                             <td>

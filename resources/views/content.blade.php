@@ -25,7 +25,11 @@
               <p><?php echo date('m月d日'); ?>こんにちは！</p>
               <h1>{{ $item->name }}</h1>
               <h2>{{ $item->name2 }}</h2>
-              <p>カテゴリー: {{ $item->category }}</p>
+              <p>カテゴリー: 
+                @foreach($item->categories as $category)
+                  {{ $category->name }}
+                @endforeach
+              </p>
               <p>レビュー: {{ $item->review }}</p>
               <p>電話番号: {{ $item->callNumber}}</p>
               <p>コメント: {{ $item->comment }}</p>

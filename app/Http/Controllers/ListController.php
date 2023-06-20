@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use App\Category;
 
 class ListController extends Controller
 {
@@ -16,21 +17,24 @@ class ListController extends Controller
 
     public function createForm()
     {
-        return view('create');
+        $categories = Category::all();
+        $selectedCategories = [];
+
+        return view('create', compact('categories', 'selectedCategories'));
     }
 
     public function create(Request $request)
     {
-        // バリデーションなどの処理を追加することができます
-
         $item = new Item();
         $item->name = $request->input('name');
         $item->name2 = $request->input('name2');
-        $item->category = implode(',', $request->input('category'));
         $item->review = $request->input('review');
         $item->comment = $request->input('comment');
         $item->callNumber = $request->input('callNumber');
         $item->save();
+
+        $categoryIds = $request->input('categories', []);
+        $item->categories()->sync($categoryIds);
 
         return redirect('/list')->with('success', 'Item created successfully!');
     }
@@ -50,19 +54,19 @@ class ListController extends Controller
 
     public function update(Request $request, $id)
     {
-        // バリデーションなどの適切な処理を行う
 
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
         $item->name2 = $request->input('name2');
-        $item->category = implode(',', $request->input('category'));
         $item->review = $request->input('review');
         $item->comment = $request->input('comment');
         $item->callNumber = $request->input('callNumber');
 
         $item->save();
 
-        // 編集が完了したらリストページにリダイレクトするなどの処理を行う
+        $categoryIds = $request->input('categories', []);
+        $item->categories()->sync($categoryIds);
+
         return redirect('/list')->with('success', 'Item updated successfully!');
     }
 

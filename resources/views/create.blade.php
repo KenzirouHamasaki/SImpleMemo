@@ -41,31 +41,16 @@
                           <input type="text" class="form-control" id="name2" name="name2" maxlength="40" value="{{ isset($item) ? $item->name2 : old('name2') }}" required>
                       </div>
       
-                      <div class="form-group">
-                          <label>カテゴリー</label>
-                          <div>
-                              <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="category1" name="category[]" value="日本食">
-                                  <label class="form-check-label" for="category1">日本食</label>
-                              </div>
-                              <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="category2" name="category[]" value="中華">
-                                  <label class="form-check-label" for="category2">中華</label>
-                              </div>
-                              <div class="form-check">
-                                  <input type="checkbox" class="form-check-input" id="category3" name="category[]" value="イタリアン">
-                                  <label class="form-check-label" for="category3">イタリアン</label>
-                              </div>
-                              <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="category4" name="category[]" value="インド料理">
-                                <label class="form-check-label" for="category4">インド料理</label>
-                            </div>
-                            <div class="form-check">
-                              <input type="checkbox" class="form-check-input" id="category4" name="category[]" value="アメリカ料理">
-                              <label class="form-check-label" for="category4">アメリカ料理</label>
-                          </div>
-                          </div>
-                      </div>
+                        <div class="form-group">
+                            <label>カテゴリー</label>
+                            @foreach($categories as $category)
+                                <div>
+                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                        @if(in_array($category->id, $selectedCategories)) checked @endif>
+                                    <label>{{ $category->name }}</label>
+                                </div>
+                            @endforeach
+                        </div>
       
                       <div class="form-group">
                           <label for="review">レビュー</label>
