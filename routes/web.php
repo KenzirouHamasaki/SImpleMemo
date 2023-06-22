@@ -31,7 +31,13 @@ Route::get('/list', 'ListController@index')->name('list.index');
 
 //新規登録/編集
 Route::get('/list/create', 'ListController@createForm')->name('list.createForm');
-Route::post('/list', 'ListController@create')->name('list.create');
+Route::post('/list/create', 'ListController@create')->name('list.create');
+
+//確認ページ
+Route::get('/list/confirm', 'ListController@confirmForm')->name('list.confirmForm');
+Route::post('/list/confirm', 'ListController@confirm')->name('list.confirm');
+Route::post('/list/store', 'ListController@store')->name('list.store');
+//Route::get('/list/confirm', 'ListController@confirm')->name('list.confirm');
 
 //リスト詳細、編集、削除
 Route::get('/list/{id}', 'ListController@content')->name('list.content');

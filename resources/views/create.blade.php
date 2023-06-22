@@ -24,7 +24,7 @@
           <div class="card">
               <div class="card-header">登録</div>
               <div class="card-body">
-                <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.create') }}" method="POST">
+                <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.confirmForm') }}" method="POST">
                   @csrf
 
                   @if(isset($item))

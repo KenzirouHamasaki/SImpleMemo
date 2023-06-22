@@ -18,13 +18,22 @@ class ListController extends Controller
     public function createForm()
     {
         $categories = Category::all();
-        $selectedCategories = [];
+        $selectedCategories = session('selectedCategories', []);
 
         return view('create', compact('categories', 'selectedCategories'));
     }
 
     public function create(Request $request)
     {
+
+        $request->validate([
+            'name' => 'required',
+            'name2' => 'required',
+            'review' => 'required',
+            'comment' => 'required',
+            'callNumber' => 'required',
+        ]);
+
         $item = new Item();
         $item->name = $request->input('name');
         $item->name2 = $request->input('name2');
@@ -33,10 +42,13 @@ class ListController extends Controller
         $item->callNumber = $request->input('callNumber');
         $item->save();
 
+        $request->session()->put('item', $item);
+
+
         $categoryIds = $request->input('categories', []);
         $item->categories()->sync($categoryIds);
 
-        return redirect('/list')->with('success', 'Item created successfully!');
+        return redirect('/list/confirm')->with('item', $item);
     }
 
     public function content($id)
@@ -54,6 +66,13 @@ class ListController extends Controller
 
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'name' => 'required',
+            'name2' => 'required',
+            'review' => 'required',
+            'comment' => 'required',
+            'callNumber' => 'required',
+        ]);
 
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
@@ -76,5 +95,45 @@ class ListController extends Controller
         $item->delete();
 
         return redirect('/list')->with('success', 'Item deleted successfully!');
+    }
+
+    public function confirm(Request $request)
+    {
+        $item = $request->session()->get('item');
+        $selectedCategories = $request->session()->get('selectedCategories', []);
+
+        $categories = Category::all();
+
+        return view('confirm', compact('item', 'categories', 'selectedCategories'));
+    }
+
+    public function confirmForm(Request $request)
+    {
+        $item = $request->session()->get('item');
+        $selectedCategories = $request->session()->get('selectedCategories', []);
+
+        $categories = Category::all();
+
+        return view('confirm', compact('item', 'categories', 'selectedCategories'));
+    }
+
+    public function store()
+    {
+        $itemData = session('itemData');
+
+        $item = new Item();
+        $item->name = $itemData['name'];
+        $item->name2 = $itemData['name2'];
+        $item->review = $itemData['review'];
+        $item->comment = $itemData['comment'];
+        $item->callNumber = $itemData['callNumber'];
+        $item->save();
+
+        $categoryIds = $itemData['categories'] ?? [];
+        $item->categories()->sync($categoryIds);
+
+        session()->forget('itemData');
+
+        return redirect('/list')->with('success', 'Item created successfully!');
     }
 }
