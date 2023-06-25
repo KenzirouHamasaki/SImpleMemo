@@ -29,9 +29,10 @@ Route::get('/top', 'TopController@index')->name('top.index');
 //お店リスト
 Route::get('/list', 'ListController@index')->name('list.index');
 
-//新規登録/編集
+//新規登録/編集 確認ページ
 Route::get('/list/create', 'ListController@createForm')->name('list.createForm');
 Route::post('/list', 'ListController@create')->name('list.create');
+Route::post('/list/create/confirm', 'ListController@confirm')->name('create.confirm');
 
 //リスト詳細、編集、削除
 Route::get('/list/{id}', 'ListController@content')->name('list.content');

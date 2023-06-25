@@ -25,18 +25,37 @@ class ListController extends Controller
 
     public function create(Request $request)
     {
-        $item = new Item();
-        $item->name = $request->input('name');
-        $item->name2 = $request->input('name2');
-        $item->review = $request->input('review');
-        $item->comment = $request->input('comment');
-        $item->callNumber = $request->input('callNumber');
-        $item->save();
+        dd($request->all());
+        $action = $request->input('action');
+        $inputs = $request->except('action');
 
-        $categoryIds = $request->input('categories', []);
-        $item->categories()->sync($categoryIds);
+        if ($action !== 'submit') {
+            return redirect()
+                ->route('list.createForm')
+                ->withInput($inputs);
+        } else {
+            $item = new Item();
+            $item->name = $request->input('name');
+            $item->name2 = $request->input('name2');
+            $item->review = $request->input('review');
+            $item->comment = $request->input('comment');
+            $item->callNumber = $request->input('callNumber');
+            $item->save();
 
-        return redirect('/list')->with('success', 'Item created successfully!');
+            $categoryIds = $request->input('categories[]');
+            $item->categories()->sync($categoryIds);
+
+            return redirect('/list')->with('success', 'Item created successfully!');
+        }
+    }
+
+    public function confirm(Request $request)
+    {
+
+
+        $inputs = $request->all();
+
+        return view('confirm', ['inputs' => $inputs,]);
     }
 
     public function content($id)

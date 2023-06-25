@@ -24,7 +24,7 @@
           <div class="card">
               <div class="card-header">登録</div>
               <div class="card-body">
-                <form action="{{ isset($item) ? route('list.update', $item->id) : route('list.create') }}" method="POST">
+                <form action="{{ isset($item) ? route('list.update', $item->id) : route('create.confirm') }}" method="POST">
                   @csrf
 
                   @if(isset($item))
@@ -40,17 +40,28 @@
                           <label for="name2">店名 フリガナ</label>
                           <input type="text" class="form-control" id="name2" name="name2" maxlength="40" value="{{ isset($item) ? $item->name2 : old('name2') }}" required>
                       </div>
-      
+
                         <div class="form-group">
-                            <label>カテゴリー</label>
-                            @foreach($categories as $category)
-                                <div>
-                                    <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                        @if(in_array($category->id, $selectedCategories)) checked @endif>
-                                    <label>{{ $category->name }}</label>
-                                </div>
-                            @endforeach
+                        <label>カテゴリー</label>
+                        @foreach($categories as $category)
+                            <div>
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    @if(in_array($category->id, $selectedCategories) || in_array($category->id, old('categories', []))) checked @endif>
+                                <label>{{ $category->name }}</label>
+                            </div>
+                        @endforeach
                         </div>
+      
+                      {{-- <div class="form-group">
+                        <label>カテゴリー</label>
+                        @foreach($categories as $category)
+                            <div>
+                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
+                                    @if(in_array($category->id, $selectedCategories)) checked @endif>
+                                <label>{{ $category->name }}</label>
+                            </div>
+                        @endforeach
+                    </div> --}}
       
                       <div class="form-group">
                           <label for="review">レビュー</label>
