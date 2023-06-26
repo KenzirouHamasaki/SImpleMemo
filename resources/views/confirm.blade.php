@@ -48,30 +48,13 @@
                           @endphp
                           @if($category)
                               <li>
-                                  <input type="hidden" id="category_{{ $category->id }}" name="categories[]" value="{{ $categoryId }}" checked disabled>
+                                  <input type="hidden" class="form-control" id="category_{{ $category->id }}" name="categories[]" value="{{ $categoryId }}">
                                   {{ $category->name }}
                               </li>
                           @endif
                       @endforeach
                   </ul>
-              </div>
-
-                {{-- <div class="form-group">
-                  <label for="categories">カテゴリー</label>
-                  <ul>
-                      @foreach($inputs['categories'] as $categoryId)
-                          @php
-                              $category = \App\Category::find($categoryId);
-                          @endphp
-                          @if($category)
-                              <li>
-                                <input type="hidden" id="category_{{ $category->id }}" name="categories[]" value="{{ $categoryId }}" checked disabled>
-                                  {{ $category->name }}
-                              </li>
-                          @endif
-                      @endforeach
-                  </ul>
-                </div> --}}
+                </div>
                 <div class="form-group">
                     <label for="review">レビュー</label>
                     {{ $inputs['review'] }}

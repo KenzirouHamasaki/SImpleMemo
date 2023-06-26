@@ -52,17 +52,6 @@
                         @endforeach
                         </div>
       
-                      {{-- <div class="form-group">
-                        <label>カテゴリー</label>
-                        @foreach($categories as $category)
-                            <div>
-                                <input type="checkbox" name="categories[]" value="{{ $category->id }}"
-                                    @if(in_array($category->id, $selectedCategories)) checked @endif>
-                                <label>{{ $category->name }}</label>
-                            </div>
-                        @endforeach
-                    </div> --}}
-      
                       <div class="form-group">
                           <label for="review">レビュー</label>
                           <select class="form-control" id="review" name="review" value="{{ isset($item) ? $item->review : old('review') }}">

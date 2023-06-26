@@ -25,7 +25,6 @@ class ListController extends Controller
 
     public function create(Request $request)
     {
-        dd($request->all());
         $action = $request->input('action');
         $inputs = $request->except('action');
 
@@ -42,7 +41,7 @@ class ListController extends Controller
             $item->callNumber = $request->input('callNumber');
             $item->save();
 
-            $categoryIds = $request->input('categories[]');
+            $categoryIds = $request->input('categories', []);
             $item->categories()->sync($categoryIds);
 
             return redirect('/list')->with('success', 'Item created successfully!');
@@ -73,7 +72,6 @@ class ListController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
         $item->name2 = $request->input('name2');
