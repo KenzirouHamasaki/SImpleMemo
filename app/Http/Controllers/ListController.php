@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Item;
 use App\Category;
 
@@ -12,7 +13,7 @@ class ListController extends Controller
     {
         $items = Item::orderBy('id')->get();
 
-        return view('list', compact('items'));
+        return view('list', compact('items',));
     }
 
     public function createForm()
@@ -27,6 +28,7 @@ class ListController extends Controller
     {
         $action = $request->input('action');
         $inputs = $request->except('action');
+        $user = Auth::user();
 
         if ($action !== 'submit') {
             return redirect()
@@ -39,6 +41,8 @@ class ListController extends Controller
             $item->review = $request->input('review');
             $item->comment = $request->input('comment');
             $item->callNumber = $request->input('callNumber');
+            $item->user()->associate($user);
+
             $item->save();
 
             $categoryIds = $request->input('categories', []);
@@ -65,9 +69,11 @@ class ListController extends Controller
 
     public function edit($id)
     {
+        $categories = Category::all();
+        $selectedCategories = [];
         $item = Item::findOrFail($id);
 
-        return view('create', compact('item'));
+        return view('create', compact('item', 'categories', 'selectedCategories'));
     }
 
     public function update(Request $request, $id)

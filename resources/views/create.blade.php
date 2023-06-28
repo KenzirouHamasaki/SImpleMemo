@@ -10,7 +10,18 @@
     <div class="row">
         <div class="col-md-3 p-0">
             <h1>SimpleMemo</h1>
-            
+            @if(Auth::check())
+              <span class="my-navbar-item">{{ Auth::user()->name }}さん</span>
+              
+              <a href="#" id="logout" class="my-navbar-item">ログアウト</a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+            @else
+              <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
+              
+              <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
+            @endif
             <!-- サイドバー -->
             <ul class="list-group">
               <li class="list-group-item {{ request()->is('top') ? 'active' : '' }}"><a href="/top">MENU</a></li>
