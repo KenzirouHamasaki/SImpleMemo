@@ -9,8 +9,8 @@
         <nav class="navbar navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('first.index') }}">{{ config('app.name', 'Laravel')}}</a>
-                <a class="login" href="#">ログイン</a>
-                <a class="register" href="#">新規登録</a>
+                <a class="login" href="{{ route('login') }}">ログイン</a>
+                <a class="register" href="{{ route('register') }}">新規登録</a>
             </div>
         </nav>
     

@@ -9,16 +9,23 @@ use App\Category;
 
 class ListController extends Controller
 {
-    public function index()
+    public function index(Item $item)
     {
-        $items = Item::orderBy('id')->get();
+        $user = Auth::user();
+        $items = $user->items()->orderBy('id')->get();
+        $categories = $user->categories()->orderBy('id')->get();
+
+        //$items = Auth::user()->items()->orderBy('id')->get();
+        //$items = Item::orderBy('id')->get();
 
         return view('list', compact('items',));
     }
 
     public function createForm()
     {
-        $categories = Category::all();
+        $user = Auth::user();
+        $categories = $user->categories()->orderBy('id')->get();
+        //$categories = Category::all();
         $selectedCategories = [];
 
         return view('create', compact('categories', 'selectedCategories'));
@@ -64,12 +71,17 @@ class ListController extends Controller
     public function content($id)
     {
         $item = Item::findOrFail($id);
+        $this->authorize('view', $item);
+
         return view('content', compact('item'));
     }
 
     public function edit($id)
     {
-        $categories = Category::all();
+        $user = Auth::user();
+        $items = $user->items()->orderBy('id')->get();
+        $categories = $user->categories()->orderBy('id')->get();
+        //$categories = Category::all();
         $selectedCategories = [];
         $item = Item::findOrFail($id);
 
@@ -78,12 +90,15 @@ class ListController extends Controller
 
     public function update(Request $request, $id)
     {
+        $user = Auth::user();
+
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
         $item->name2 = $request->input('name2');
         $item->review = $request->input('review');
         $item->comment = $request->input('comment');
         $item->callNumber = $request->input('callNumber');
+        $item->user()->associate($user);
 
         $item->save();
 
