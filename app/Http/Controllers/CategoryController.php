@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
         $user = Auth::user();
         $categories = $user->categories()->orderBy('id')->get();
-        //$categories = Category::orderBy('id')->get();
+
         return view('categories', compact('categories'));
     }
 
@@ -22,9 +22,6 @@ class CategoryController extends Controller
             'category_name' => 'required|string|max:255',
         ]);
 
-        // Category::create([
-        //     'name' => $request->input('category_name'),
-        // ]);
         $user = Auth::user();
 
         $category = new Category([
@@ -38,6 +35,8 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
+        $this->authorize('view', $category);
+
         return view('categoriesEdit', compact('category'));
     }
 

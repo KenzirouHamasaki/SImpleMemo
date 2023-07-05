@@ -84,6 +84,7 @@ class ListController extends Controller
         //$categories = Category::all();
         $selectedCategories = [];
         $item = Item::findOrFail($id);
+        $this->authorize('view', $item);
 
         return view('create', compact('item', 'categories', 'selectedCategories'));
     }
