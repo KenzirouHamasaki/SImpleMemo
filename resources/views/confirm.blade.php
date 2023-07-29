@@ -5,26 +5,26 @@
 @section('content')
   <div class="col-md-9">
     <div id="main-content">
-      <h1>確認ページ</h1>
+      <h1 class="confirm-title">確認ページ</h1>
 
-      <h2>入力内容</h2>
+      <h2 class="confirm-subtitle">入力内容</h2>
 
-      <form method="POST" action="{{ route('list.create') }}">
+      <form class="confirm-form" method="POST" action="{{ route('list.create') }}">
         @csrf
 
         <div class="form-group">
-          <label for="name">名前</label>
+          <label for="name">名前 : </label>
           {{ $inputs['name'] }}
           <input type="hidden" class="form-control" id="name" name="name" value="{{ $inputs['name'] }}" readonly>
         </div>
         <div class="form-group">
-          <label for="name2">フリガナ</label>
+          <label for="name2">フリガナ : </label>
           {{ $inputs['name2'] }}
           <input type="hidden" class="form-control" id="name2" name="name2" value="{{ $inputs['name2'] }}" readonly>
         </div>
 
         <div class="form-group">
-          <label for="categories">カテゴリー</label>
+          <label for="categories">カテゴリー : </label>
           <ul>
             @foreach($inputs['categories'] as $categoryId)
               @php
@@ -40,17 +40,17 @@
           </ul>
         </div>
         <div class="form-group">
-          <label for="review">レビュー</label>
+          <label for="review">レビュー : </label>
           {{ $inputs['review'] }}
           <input type="hidden" class="form-control" id="review" name="review" value="{{ $inputs['review'] }}" readonly>
         </div>
         <div class="form-group">
-          <label for="comment">コメント</label>
+          <label for="comment">コメント : </label>
           {!! nl2br(e($inputs['comment'])) !!}
           <input type="hidden" class="form-control" id="comment" name="comment" value="{{ $inputs['comment'] }}" readonly>
         </div>
         <div class="form-group">
-          <label for="callNumber">電話番号</label>
+          <label for="callNumber">電話番号 : </label>
           {{ $inputs['callNumber'] }}
           <input type="hidden" class="form-control" id="callNumber" name="callNumber" value="{{ $inputs['callNumber'] }}" readonly>
         </div>

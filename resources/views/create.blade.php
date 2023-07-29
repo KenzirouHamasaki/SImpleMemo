@@ -4,7 +4,7 @@
 @section('content')
   <div id="main-content" class="center-form">
     <div class="card">
-      <div class="card-header">登録</div>
+      <div class="card-header">お店登録</div>
         <div class="card-body">
           <form action="{{ isset($item) ? route('list.update', $item->id) : route('create.confirm') }}" method="POST">
           @csrf

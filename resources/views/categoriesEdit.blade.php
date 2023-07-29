@@ -5,9 +5,9 @@
 @section('content')
   <div class="col-md-9">
     <div id="main-content">
-      <h1>カテゴリー編集ページ</h1>
+      <h1 class="categoryEdit-title">カテゴリー編集ページ</h1>
 
-      <form action="{{ route('categories.update', $category->id) }}" method="POST">
+      <form class="categoryEdit-form" action="{{ route('categories.update', $category->id) }}" method="POST">
         @csrf
         @method('PUT')
         <label for="name">カテゴリー名</label>
@@ -15,7 +15,7 @@
         <button type="submit">修正</button>
       </form>
 
-      <a href="{{ route('categories.index') }}">戻る</a>
+      <a class="categoryEdit-button" href="{{ route('categories.index') }}">戻る</a>
     </div>
   </div>
 @endsection

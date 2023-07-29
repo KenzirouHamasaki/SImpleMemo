@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
 </head>
 
-<body>
-  <div class="container-fluid">
+
+  <div class="container-fluid d-flex flex-column" style="height: 100vh;">
     <div class="row">
-        <div class="col-md-3 p-0">
+        <div class="col-md-3" style="flex: 0 0 auto;">
             <h1>SimpleMemo</h1>
             @if(Auth::check())
               <span class="my-navbar-item">{{ Auth::user()->name }}さん</span>
@@ -43,4 +43,4 @@
   </script>
 @endif
 
-</body>
+
