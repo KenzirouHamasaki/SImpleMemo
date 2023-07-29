@@ -29,12 +29,6 @@ body,
   }
 }
 
-
-.col-lg-4,
-.col-md-6 {
-  margin-bottom: 24px;
-}
-
 a,
 a:visited,
 a:hover,
@@ -50,6 +44,11 @@ a:active {
       height: 300px;
     }
   }
+
+  .col-md-3 {
+    width: 100%;
+    padding-bottom: 20px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -58,6 +57,11 @@ a:active {
       height: auto;
       max-height: 700px;
     }
+  }
+
+  .col-md-3 {
+    width: 100%;
+    padding-bottom: 20px;
   }
 }
 
@@ -72,8 +76,85 @@ a:active {
   color: #fff;
 }
 
-//createForm
-//.center-content {
-//  display: flex;
-//  justify-content: center;
-//}
+//トップページ
+.hello {
+  padding-top: 30px;
+  padding-left: 30px;
+  font-size: 30px;
+}
+
+//リストページ カテゴリーページ
+h2.list {
+  padding: 50px 30px;
+}
+
+.lists {
+  padding: 0px 30px;
+}
+
+.category-list {
+  padding: 0px 200px;
+}
+
+table {
+  width: 100%
+}
+
+.text-center {
+  text-align: center;
+}
+
+.table-bordered {
+  border-color: black;
+}
+
+.category-form {
+  padding: 50px 200px;
+}
+
+//新規登録ページ
+.center-form {
+  width: 75%;
+}
+
+.card {
+  width: 100%;
+  padding: 30px 100px;
+}
+
+//登録確認ページ
+.confirm-title {
+  padding: 30px 30px;
+}
+
+.confirm-subtitle,
+.confirm-form {
+  padding-left: 200px;
+}
+
+//詳細ページ
+.content-title {
+  padding: 30px 30px;
+}
+
+.content-subtitle {
+  padding-left: 40px;
+  margin-top: 20px;
+}
+
+.content-subtitle2 {
+  padding-left: 40px;
+}
+
+//カテゴリー編集ページ
+.categoryEdit-title {
+  padding: 30px;
+}
+
+.categoryEdit-form {
+  padding: 30px;
+}
+
+.categoryEdit-button {
+  padding: 30px;
+}

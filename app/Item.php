@@ -16,10 +16,16 @@ class Item extends Model
         'comment',
         'callNumber',
         '_token',
+        'user_id',
     ];
 
     public function categories()
     {
         return $this->belongsToMany(Category::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::orderBy('id')->get();
+        $user = Auth::user();
+        $categories = $user->categories()->orderBy('id')->get();
+
         return view('categories', compact('categories'));
     }
 
@@ -19,15 +22,21 @@ class CategoryController extends Controller
             'category_name' => 'required|string|max:255',
         ]);
 
-        Category::create([
+        $user = Auth::user();
+
+        $category = new Category([
             'name' => $request->input('category_name'),
         ]);
+
+        $user->categories()->save($category);
 
         return redirect()->route('categories.index');
     }
 
     public function edit(Category $category)
     {
+        $this->authorize('view', $category);
+
         return view('categoriesEdit', compact('category'));
     }
 

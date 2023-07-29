@@ -3,76 +3,96 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Item;
 use App\Category;
 
 class ListController extends Controller
 {
-    public function index()
+    public function index(Item $item)
     {
-        $items = Item::orderBy('id')->get();
+        $user = Auth::user();
+        $items = $user->items()->orderBy('id')->get();
+        $categories = $user->categories()->orderBy('id')->get();
 
-        return view('list', compact('items'));
+        //$items = Auth::user()->items()->orderBy('id')->get();
+        //$items = Item::orderBy('id')->get();
+
+        return view('list', compact('items',));
     }
 
     public function createForm()
     {
-        $categories = Category::all();
-        $selectedCategories = session('selectedCategories', []);
+        $user = Auth::user();
+        $categories = $user->categories()->orderBy('id')->get();
+        //$categories = Category::all();
+        $selectedCategories = [];
 
         return view('create', compact('categories', 'selectedCategories'));
     }
 
     public function create(Request $request)
     {
+        $action = $request->input('action');
+        $inputs = $request->except('action');
+        $user = Auth::user();
 
-        $request->validate([
-            'name' => 'required',
-            'name2' => 'required',
-            'review' => 'required',
-            'comment' => 'required',
-            'callNumber' => 'required',
-        ]);
+        if ($action !== 'submit') {
+            return redirect()
+                ->route('list.createForm')
+                ->withInput($inputs);
+        } else {
+            $item = new Item();
+            $item->name = $request->input('name');
+            $item->name2 = $request->input('name2');
+            $item->review = $request->input('review');
+            $item->comment = $request->input('comment');
+            $item->callNumber = $request->input('callNumber');
+            $item->user()->associate($user);
 
-        $item = new Item();
-        $item->name = $request->input('name');
-        $item->name2 = $request->input('name2');
-        $item->review = $request->input('review');
-        $item->comment = $request->input('comment');
-        $item->callNumber = $request->input('callNumber');
-        $item->save();
+            $item->save();
 
-        $request->session()->put('item', $item);
+            $categoryIds = $request->input('categories', []);
+            $item->categories()->sync($categoryIds);
+
+            return redirect('/list')->with('success', 'Item created successfully!');
+        }
+    }
+
+    public function confirm(Request $request)
+    {
 
 
-        $categoryIds = $request->input('categories', []);
-        $item->categories()->sync($categoryIds);
+        $inputs = $request->all();
 
-        return redirect('/list/confirm')->with('item', $item);
+        return view('confirm', ['inputs' => $inputs,]);
+
     }
 
     public function content($id)
     {
         $item = Item::findOrFail($id);
+        $this->authorize('view', $item);
+
         return view('content', compact('item'));
     }
 
     public function edit($id)
     {
+        $user = Auth::user();
+        $items = $user->items()->orderBy('id')->get();
+        $categories = $user->categories()->orderBy('id')->get();
+        //$categories = Category::all();
+        $selectedCategories = [];
         $item = Item::findOrFail($id);
+        $this->authorize('view', $item);
 
-        return view('create', compact('item'));
+        return view('create', compact('item', 'categories', 'selectedCategories'));
     }
 
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'name2' => 'required',
-            'review' => 'required',
-            'comment' => 'required',
-            'callNumber' => 'required',
-        ]);
+        $user = Auth::user();
 
         $item = Item::findOrFail($id);
         $item->name = $request->input('name');
@@ -80,6 +100,7 @@ class ListController extends Controller
         $item->review = $request->input('review');
         $item->comment = $request->input('comment');
         $item->callNumber = $request->input('callNumber');
+        $item->user()->associate($user);
 
         $item->save();
 
