@@ -3,9 +3,10 @@
 <head>
     <title>ダッシュボード | {{ config('app.name', 'Laravel')}}</title>
     <link rel="stylesheet" href="{{ asset('/css/app.css') }}">
+    @livewireStyles
 </head>
 
-
+<body>
   <div class="container-fluid d-flex flex-column" style="height: 100vh;">
     <div class="row">
         <div class="col-md-3" style="flex: 0 0 auto;">
@@ -32,7 +33,9 @@
         </div>
         @yield('content')
     </div>
-</div>
+  </div>
+@livewireScripts
+</body>
 
 @if(Auth::check())
   <script>
